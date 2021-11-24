@@ -3,6 +3,7 @@ import paper from "../images/icon-paper.svg";
 import scissors from "../images/icon-scissors.svg";
 import lizard from "../images/icon-lizard.svg";
 import spock from "../images/icon-spock.svg";
+import { useState } from "react";
 
 const options = { rock, paper, scissors, lizard, spock };
 
@@ -10,6 +11,14 @@ const options = { rock, paper, scissors, lizard, spock };
 
 const Token = ({ choice, gameMode, clickEvent, isWinner }) => {
   console.log(isWinner);
+  const [shadow, setShadow] = useState("");
+
+  function applyWinnerShadow(isWinner) {
+    if (isWinner) {
+      setTimeout(() => setShadow("shadow-3xl"), 3000);
+    }
+  }
+
   const themes = {
     rock: "bg-red-500 border-b-4 border-red-700",
     paper: "bg-blue-300 border-b-4 border-blue-500",
@@ -52,11 +61,11 @@ const Token = ({ choice, gameMode, clickEvent, isWinner }) => {
   //   console.log(choice);
   const colorTheme = themes[choice];
   const coords = position[choice];
+
+  applyWinnerShadow(isWinner);
   return choice ? (
     <button
-      className={`flex justify-center h-40 w-40 items-center relative rounded-full border-b-4 border-gray-700 ${colorTheme} ${coords} ${
-        isWinner ? "filter shadow-3xl " : ""
-      }`}
+      className={`flex justify-center h-40 w-40 items-center relative rounded-full border-b-4 border-gray-700 ${colorTheme} ${coords} filter ${shadow} transition-shadow duration-1000 ease-out`}
       onClick={() => {
         clickEvent ? clickEvent(choice) : null;
       }}

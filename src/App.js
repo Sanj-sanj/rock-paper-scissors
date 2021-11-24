@@ -28,27 +28,20 @@ const App = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between bg-blue-600 overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-bl transform from-blue-800 to-blue-900 overflow-hidden">
       <div className="flex flex-col w-full items-center justify-center">
         <ScoreBoard gameMode={difficulty} score={score} />
       </div>
-      {/* <button
-        className="fixed z-10 bottom-1/2 mt-4 border bg-purple-200 rounded-md border-purple-400 px-4 py-2"
-        onClick={() => {
-          difficulty === "easy" ? setDifficulty("hard") : setDifficulty("easy");
-        }}
-      >
-        Change difficulty{" "}
-      </button> */}
+
       <GameBoard
         gameMode={difficulty}
-        updateScore={(points) => updateScore(points)}
+        updateScore={(points) => setTimeout(() => updateScore(points), 3000)}
         setDifficulty={() =>
           setDifficulty(difficulty === "easy" ? "hard" : "easy")
         }
       />
       <button
-        className="border border-gray-100 px-14 py-1.5 rounded-xl text-white font-semibold"
+        className="absolute bottom-8 right-2 border border-gray-100 px-14 py-1.5 rounded-xl text-white font-semibold"
         onClick={() => setShowModal(!showModal)}
       >
         RULES

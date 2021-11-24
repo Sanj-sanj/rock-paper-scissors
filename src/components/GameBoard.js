@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Token from "./Token";
 import pentagon from "../images/bg-pentagon.svg";
 import triangle from "../images/bg-triangle.svg";
@@ -15,6 +15,7 @@ function itemItter(arr) {
 }
 
 const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
+  const animationRef = useRef(null);
   const [gameTokens, setGameTokens] = useState(selections);
   const [userInput, setUserInput] = useState("");
   const [houseInput, setHouseInput] = useState("");
@@ -97,8 +98,19 @@ const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
         </div>
       ) : (
         <>
-          <div className="flex text-white w-full md:w-2/3 sm:px-11 justify-evenly items-center text-center transform scale-70 sm:scale-100 md:scale-110 lg:scale-125">
-            <span className="relative  sm:w-1/2 flex flex-col items-center whitespace-nowrap">
+          <div className="flex text-white w-full md:w-2/3 sm:px-11 justify-evenly items-center text-center transform scale-70 sm:scale-100 md:scale-110 lg:scale-125 transition-all">
+            <span
+              className="relative animate-fade-in sm:w-1/2 flex flex-col items-center whitespace-nowrap"
+              onAnimationEnd={(e) => {
+                console.log(e.target);
+                setTimeout(() => {
+                  e.target.nextElementSibling.classList.remove("invisible");
+                  e.target.nextElementSibling.classList.add("animate-fade-in");
+                }, 750);
+                animationRef.current.classList.remove("invisible");
+                animationRef.current.classList.add("animate-fade-in");
+              }}
+            >
               <span className="mb-4 absolute -top-14">YOU PICKED</span>
               <Token
                 choice={userInput}
@@ -106,7 +118,7 @@ const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
                 isWinner={(() => result.includes("WIN"))()}
               />
             </span>
-            <div className=" mx-3 md:mx-0 min-w-max sm:w-1/4 max-w-min p-3 flex flex-col flex-grow font-bold text-gray-50 text-4xl self-end sm:self-auto">
+            <div className="flex flex-col flex-grow invisible mx-3 md:mx-0 min-w-max sm:w-1/4 max-w-min p-3 font-bold text-gray-50 text-4xl self-end sm:self-auto">
               {result}
               <button
                 className="border mt-4 border-gray-100 bg-gray-50 rounded-xl p-4 text-base font-semibold text-blue-600"
@@ -115,7 +127,10 @@ const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
                 PLAY AGAIN
               </button>
             </div>
-            <span className="relative sm:w-1/2 flex flex-col items-center whitespace-nowrap">
+            <span
+              className="relative sm:w-1/2 flex flex-col items-center whitespace-nowrap invisible"
+              ref={animationRef}
+            >
               <span className="mb-4 absolute -top-14">THE HOUSE PICKED</span>
               <Token
                 choice={houseInput}
