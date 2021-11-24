@@ -8,7 +8,8 @@ const options = { rock, paper, scissors, lizard, spock };
 
 /* make the token have an :afte that is an absolute ciecle with border bottom for shade, do same for inner circle */
 
-const Token = ({ choice, gameMode, clickEvent }) => {
+const Token = ({ choice, gameMode, clickEvent, isWinner }) => {
+  console.log(isWinner);
   const themes = {
     rock: "bg-red-500 border-b-4 border-red-700",
     paper: "bg-blue-300 border-b-4 border-blue-500",
@@ -53,8 +54,12 @@ const Token = ({ choice, gameMode, clickEvent }) => {
   const coords = position[choice];
   return choice ? (
     <button
-      className={`flex justify-center h-40 w-40 items-center relative rounded-full border-b-4 border-gray-700 ${colorTheme} ${coords} focus:ring-8`}
-      onClick={() => clickEvent(choice)}
+      className={`flex justify-center h-40 w-40 items-center relative rounded-full border-b-4 border-gray-700 ${colorTheme} ${coords} ${
+        isWinner ? "filter shadow-3xl " : ""
+      }`}
+      onClick={() => {
+        clickEvent ? clickEvent(choice) : null;
+      }}
     >
       <div
         className=" flex justify-center  h-32 w-32 items-center rounded-full bg-white border-t-8 border-gray-200"

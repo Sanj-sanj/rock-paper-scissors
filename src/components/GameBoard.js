@@ -14,7 +14,7 @@ function itemItter(arr) {
   };
 }
 
-const GameBoard = ({ gameMode, updateScore }) => {
+const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
   const [gameTokens, setGameTokens] = useState(selections);
   const [userInput, setUserInput] = useState("");
   const [houseInput, setHouseInput] = useState("");
@@ -47,7 +47,7 @@ const GameBoard = ({ gameMode, updateScore }) => {
       lizard: ["spock", "paper"],
       spock: ["scissors", "rock"],
     };
-    if (uI === cI) return "TIED";
+    if (uI === cI) return "YOU TIED";
     if (weights[uI].includes(cI)) {
       updateScore(1);
       return "YOU WIN";
@@ -58,20 +58,34 @@ const GameBoard = ({ gameMode, updateScore }) => {
     }
   }
 
+  function clearGameState() {
+    setUserInput("");
+    setHouseInput("");
+    setResult("YOU");
+  }
+
   useEffect(() => {
     if (gameMode === "easy") setGameTokens(selections.slice(0, -2));
     if (gameMode === "hard") setGameTokens(selections);
   }, [gameMode]);
 
   return (
-    <div className="relative flex h-96 w-96 flex-wrap transform scale-75 sm:scale-100">
+    <>
       {!userInput ? (
-        <>
+        <div className="relative flex h-96 w-96 flex-wrap items-center transform scale-70 sm:scale-75 md:scale-100 lg:scale-110">
           <img
             className="absolute flex justify-center w-full place-content-center"
             src={gameMode === "hard" ? pentagon : triangle}
             alt={gameMode === "hard" ? "pentagon" : "triangle"}
           />
+          <button
+            className={`fixed left-0 right-0 m-auto ${
+              gameMode === "hard" ? "" : "top-1/4"
+            } mt-4 border  rounded-md border-gray-100 font-semibold text-white px-7 py-1.5`}
+            onClick={setDifficulty}
+          >
+            {gameMode === "easy" ? "HARD MODE" : "EASY MODE"}
+          </button>
           {gameTokens.map((name) => (
             <Token
               key={name}
@@ -80,31 +94,39 @@ const GameBoard = ({ gameMode, updateScore }) => {
               clickEvent={getNewInput}
             />
           ))}
-        </>
+        </div>
       ) : (
         <>
-          <div className="flex w-full justify-between text-center">
-            <span className="">
-              <Token choice={userInput} gameMode={"new"} />
-              YOU PICKED
+          <div className="flex text-white w-full md:w-2/3 sm:px-11 justify-evenly items-center text-center transform scale-70 sm:scale-100 md:scale-110 lg:scale-125">
+            <span className="relative  sm:w-1/2 flex flex-col items-center whitespace-nowrap">
+              <span className="mb-4 absolute -top-14">YOU PICKED</span>
+              <Token
+                choice={userInput}
+                gameMode={"new"}
+                isWinner={(() => result.includes("WIN"))()}
+              />
             </span>
-            <span className=" ">
-              <Token choice={houseInput} gameMode={"new"} />
-              THE HOUSE PICKED
+            <div className=" mx-3 md:mx-0 min-w-max sm:w-1/4 max-w-min p-3 flex flex-col flex-grow font-bold text-gray-50 text-4xl self-end sm:self-auto">
+              {result}
+              <button
+                className="border mt-4 border-gray-100 bg-gray-50 rounded-xl p-4 text-base font-semibold text-blue-600"
+                onClick={clearGameState}
+              >
+                PLAY AGAIN
+              </button>
+            </div>
+            <span className="relative sm:w-1/2 flex flex-col items-center whitespace-nowrap">
+              <span className="mb-4 absolute -top-14">THE HOUSE PICKED</span>
+              <Token
+                choice={houseInput}
+                gameMode={"new"}
+                isWinner={(() => result.includes("LOSE"))()}
+              />
             </span>
-          </div>
-          <div className="w-full text-center flex flex-col justify-center font-bold text-gray-50 text-4xl">
-            {result}
-            <button
-              className="border mt-4 border-gray-100 bg-gray-50 rounded-xl p-4 text-base font-semibold text-blue-600"
-              onClick={() => setUserInput("")}
-            >
-              PLAY AGAIN
-            </button>
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 export default GameBoard;
