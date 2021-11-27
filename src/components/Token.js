@@ -3,18 +3,20 @@ import paper from "../images/icon-paper.svg";
 import scissors from "../images/icon-scissors.svg";
 import lizard from "../images/icon-lizard.svg";
 import spock from "../images/icon-spock.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const options = { rock, paper, scissors, lizard, spock };
 
 const Token = ({ choice, gameMode, clickEvent, isWinner }) => {
   const [shadow, setShadow] = useState("");
 
-  function applyWinnerShadow(isWinner) {
+  useEffect(() => {
+    let timerID;
     if (isWinner) {
-      setTimeout(() => setShadow("drop-shadow-white-center"), 3000);
+      timerID = setTimeout(() => setShadow("drop-shadow-white-center"), 3000);
     }
-  }
+    return () => clearTimeout(timerID);
+  }, [isWinner]);
 
   const themes = {
     rock: "bg-red-500 border-b-4 border-red-700",
@@ -59,7 +61,6 @@ const Token = ({ choice, gameMode, clickEvent, isWinner }) => {
   const colorTheme = themes[choice];
   const coords = position[choice];
 
-  applyWinnerShadow(isWinner);
   return choice ? (
     <button
       className={`flex justify-center h-40 w-40 items-center relative rounded-full border-b-4 border-gray-700 ${colorTheme} ${coords} ${shadow} transition-filter duration-1000 ease-in filter`}

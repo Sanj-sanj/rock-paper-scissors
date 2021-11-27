@@ -80,7 +80,7 @@ const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
             alt={gameMode === "hard" ? "pentagon" : "triangle"}
           />
           <button
-            className={`fixed left-0 right-0 m-auto ${
+            className={`fixed left-0 right-0 m-auto max-w-min ${
               gameMode === "hard" ? "" : "top-1/4"
             } mt-4 border  rounded-md border-gray-100 font-semibold text-white px-7 py-1.5`}
             onClick={setDifficulty}
@@ -115,10 +115,10 @@ const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
               <Token
                 choice={userInput}
                 gameMode={"new"}
-                isWinner={(() => result.includes("WIN"))()}
+                isWinner={result.includes("WIN")}
               />
             </span>
-            <div className="flex flex-col flex-grow invisible mx-3 md:mx-0 min-w-max sm:w-1/4 max-w-min p-3 font-bold text-gray-50 text-4xl self-end sm:self-auto">
+            <div className="flex flex-col flex-grow invisible mx-2 md:mx-0 min-w-max sm:w-1/4 max-w-min p-3 font-bold text-gray-50 text-4xl self-end sm:self-auto">
               {result}
               <button
                 className="border mt-4 border-gray-100 bg-gray-50 rounded-xl p-4 text-base font-semibold text-blue-600"
@@ -135,7 +135,7 @@ const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
               <Token
                 choice={houseInput}
                 gameMode={"new"}
-                isWinner={(() => result.includes("LOSE"))()}
+                isWinner={result.includes("LOSE")}
               />
             </span>
           </div>
