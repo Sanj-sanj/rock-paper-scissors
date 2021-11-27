@@ -73,7 +73,7 @@ const GameBoard = ({ gameMode, updateScore, setDifficulty }) => {
   return (
     <>
       {!userInput ? (
-        <div className="relative flex h-96 w-96 flex-wrap items-center transform scale-70 sm:scale-75 md:scale-100 lg:scale-110">
+        <div className="relative flex h-96 w-96 flex-wrap items-center transform scale-70 sm:scale-75 md:scale-90 2xl:scale-100">
           <img
             className="absolute flex justify-center w-full place-content-center"
             src={gameMode === "hard" ? pentagon : triangle}

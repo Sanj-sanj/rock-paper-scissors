@@ -7,15 +7,12 @@ import { useState } from "react";
 
 const options = { rock, paper, scissors, lizard, spock };
 
-/* make the token have an :afte that is an absolute ciecle with border bottom for shade, do same for inner circle */
-
 const Token = ({ choice, gameMode, clickEvent, isWinner }) => {
-  console.log(isWinner);
   const [shadow, setShadow] = useState("");
 
   function applyWinnerShadow(isWinner) {
     if (isWinner) {
-      setTimeout(() => setShadow("shadow-3xl"), 3000);
+      setTimeout(() => setShadow("drop-shadow-white-center"), 3000);
     }
   }
 
@@ -58,22 +55,19 @@ const Token = ({ choice, gameMode, clickEvent, isWinner }) => {
         ? "bg-green-300 border-b-4 border-green-500"
         : "",
   };
-  //   console.log(choice);
+
   const colorTheme = themes[choice];
   const coords = position[choice];
 
   applyWinnerShadow(isWinner);
   return choice ? (
     <button
-      className={`flex justify-center h-40 w-40 items-center relative rounded-full border-b-4 border-gray-700 ${colorTheme} ${coords} filter ${shadow} transition-shadow duration-1000 ease-out`}
+      className={`flex justify-center h-40 w-40 items-center relative rounded-full border-b-4 border-gray-700 ${colorTheme} ${coords} ${shadow} transition-filter duration-1000 ease-in filter`}
       onClick={() => {
         clickEvent ? clickEvent(choice) : null;
       }}
     >
-      <div
-        className=" flex justify-center  h-32 w-32 items-center rounded-full bg-white border-t-8 border-gray-200"
-        // style={{ width: "42vw" }}
-      >
+      <div className=" flex justify-center h-32 w-32 items-center rounded-full bg-white border-t-8 border-gray-200">
         <img
           className="w-14"
           alt="Selection token for game."

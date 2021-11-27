@@ -28,7 +28,7 @@ const App = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-bl transform from-blue-800 to-blue-900 overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-bl transform from-red-800 to-blue-900 overflow-hidden">
       <div className="flex flex-col w-full items-center justify-center">
         <ScoreBoard gameMode={difficulty} score={score} />
       </div>

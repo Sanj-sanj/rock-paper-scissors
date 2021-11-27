@@ -10,8 +10,11 @@ module.exports = {
       scale: {
         70: ".7",
       },
-      boxShadow: {
-        "3xl": "0px 0px 220px 100px rgba(219, 219, 219, 0.3)",
+      dropShadow: {
+        "white-center": "0px 0px 4em rgba(255, 255, 255, 1)",
+      },
+      transitionProperty: {
+        filter: "filter",
       },
       keyframes: {
         "slide-left": {
