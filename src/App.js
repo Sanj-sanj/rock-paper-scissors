@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ReactDOM from "react-dom";
-import "tailwindcss/tailwind.css";
 import GameBoard from "./components/GameBoard";
 import ScoreBoard from "./components/ScoreBoard";
 import RulesModal from "./components/RulesModal";
